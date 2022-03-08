@@ -39,44 +39,48 @@ const data = [
   },
 ];
 
+export async function getTemperature(id) {
+  const temperature = await fetch(`http://localhost:8081/temperature/${id}`);
+  const body = await temperature.json();
+  if (temperature.ok && body) {
+    return body;
+  };
+}
+
+export function returnCombineArrayById(array1, array2) {
+  return array1.map(v => ({ ...v, ...array2.find(i => i.id === v.id) }));
+}
+
 function App() {
-  const [items, setItems] = useState({});
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const request = () =>
-      data.forEach((product) => {
-        fetch(`http://localhost:8081/temperature/${product.id}`)
-          .then((response) => response.json())
-          .then((response) =>
-            setItems((prevItems) => ({
-              ...prevItems,
-              [product.id]: {
-                ...product,
-                ...response,
-              },
-            }))
-          );
-      });
+    const request = async () => {
+      // return all of request data as array
+      const request = await Promise.all(data.map(product => getTemperature(product.id)));
+      // combine data and request into one array
+      const result = returnCombineArrayById(request, data);
+      setItems(result);
+    }
+    request();
 
     setInterval(request, 5000);
-
-    request();
   }, []);
 
   return (
     <div className="App">
-      <h2>Beers</h2>
+      <h2 data-testid="title">Beers</h2>
       <table>
         <thead>
           <tr>
-            <th align="left">Product</th>
-            <th align="left">Temperature</th>
-            <th align="left">Status</th>
+            <th data-testid="product" align="left">Product</th>
+            <th data-testid="temperature" align="left">Temperature</th>
+            <th data-testid="status" align="left">Status</th>
           </tr>
         </thead>
         <tbody>
           {Object.keys(items).map((itemKey) => (
-            <tr key={items[itemKey].id}>
+            <tr data-testid={`item-row-`+items[itemKey].id} key={items[itemKey].id}>
               <td width={150}>{items[itemKey].name}</td>
               <td width={150}>{items[itemKey].temperature}</td>
               <td width={150}>
