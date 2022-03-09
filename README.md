@@ -10,12 +10,12 @@
   5. Added data-testId for easier code reference for unit testing, and value checking.
 
 **What would you improve next if you had more time?**
-  1. I would use redux saga to handle the API call, and create a services modules which handles all the apiService calls
-  2. By using a generic apiService calls, we can have a common error handlings for apiService calls, such as (BadRequestError, NotFoundResponseError, ConflictResponseError).
-  2. I would like to create a react table component that requires at least array and columns object (consist of class, and value) as the props.
-  3. New table component also allows easier unit testing and ensure component is working as intended
-  4. Move all the logic (too low, too high, ...) in render to a function (it can be located in libs/helper). Render function should only be use to display result, not handle logics
-  5. Additional page testing is needed to ensure data is generated properly by mocking api calls, and ensure each elements generated properly
+  1. There's one improvement change, that i have overlook, it is setInterval should be removed, and i should have use setTimeout(request, 5000) after line 63 setItems(result) instead. This would improve the performance for apiCall to wait for previous call to be completed, before launching the next one
+  2. I would use redux saga to handle the API call, and create a services modules which handles all the apiService calls
+  3. By using a generic apiService calls, we can have a common error handlings for apiService calls, such as (BadRequestError, NotFoundResponseError, ConflictResponseError).
+  4. I would like to create a react table component that requires at least array and columns object (consist of class, and value) as the props.
+  5. New table component also allows easier unit testing and ensure component is working as intended
+  6. Move all the logic (too low, too high, ...) in render to a function (it can be located in libs/helper). Render function should only be use to display result, not handle logics
   
 **Questions you would ask and your own answers and assumptions**
   1. Why can't the api calls handles a list of ids, and return the result in array, or call .../sensor should return all the available measurement and let UI handles
@@ -28,7 +28,7 @@
   2. Create a temporary array, then combine them with "data array", also reduce the need of using complicated and confusing call of "...prevItems" and combining them before storing into setItems.
   
 **Any other notes you feel relevant to evaluate your test improvements.**
-  1. Feel free to comment on my project and i hope, i can explain a lot more in details on my approach and codes in our next meeting.
+  1. Additional page testing is needed to ensure data is generated properly by mocking api calls, and ensure each elements generated properly.
 
 Cheers, Thanks for reading my long comment
 
