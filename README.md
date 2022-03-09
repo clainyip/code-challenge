@@ -10,7 +10,7 @@
   5. Added data-testId for easier code reference for unit testing, and value checking.
 
 **What would you improve next if you had more time?**
-  1. There's one improvement change, that i have overlook, it is setInterval should be removed, and i should have use setTimeout(request, 5000) after line 63 setItems(result) instead. This would improve the performance for apiCall to wait for previous call to be completed, before launching the next one
+  1. There's one improvement change, that i have overlooked, it is to remove setInterval, and replace it with a function that call setTimeout(request, 5000) after line 63 setItems(result) instead. This would improve the performance for apiCall to wait for previous call to be completed, before launching the next one
   2. I would use redux saga to handle the API call, and create a services modules which handles all the apiService calls
   3. By using a generic apiService calls, we can have a common error handlings for apiService calls, such as (BadRequestError, NotFoundResponseError, ConflictResponseError).
   4. I would like to create a react table component that requires at least array and columns object (consist of class, and value) as the props.
